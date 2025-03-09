@@ -12,9 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <GoogleOAuthProvider clientId="854940596531-pe3tvrsec94arejuc24fbl0ie44dn0kk.apps.googleusercontent.com">
-      <AuthContextProvider>
-        <App />
-      </AuthContextProvider>
+      {/* <AuthContextProvider> */}
+      <App />
+      {/* </AuthContextProvider> */}
     </GoogleOAuthProvider>
   </React.StrictMode>
 );
