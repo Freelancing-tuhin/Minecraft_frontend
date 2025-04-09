@@ -1,15 +1,19 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SIgnUp from "./screens/auth/signup/SIgnUp";
 import RazorPayBtn from "./components/shared/razorPayBtn/RazorPayBtn";
+import Home from "./screens/home/Home";
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      {/* <SIgnUp /> */}
-      <RazorPayBtn />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<SIgnUp />} />
+        <Route path="/payment" element={<RazorPayBtn />} />
+      </Routes>
+    </Router>
   );
 }
 

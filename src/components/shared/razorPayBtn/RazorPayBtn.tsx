@@ -51,7 +51,7 @@ const RazorPayBtn = () => {
 
   return (
     <div
-      onClick={() => handlePayment("order_Q4n40HFzfcFyyL")}
+      onClick={() => handlePayment("order_QEeAVJGIaHq2sy")}
       className="bg-red-500 text-white p-9 hover:bg-black hover:text-white w-56"
     >
       RazorPayBtn
