@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ConcertCard from "../../../components/shared/card/Card";
+import { api } from "../../../utils";
 
 const dummySlides = [
   {
@@ -161,37 +162,54 @@ const dummySlides = [
 ];
 
 const CardList: React.FC = () => {
+  const [eventList, setEventList] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const getEventsList = async () => {
+    try {
+      const response = await api.events.getAllEvents({ page: 1, limit: 8 });
+      console.log("API Response:", response);
+      setEventList(response); // Assuming response.data holds the list
+    } catch (error) {
+      console.error("Failed to fetch events:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getEventsList();
+  }, []);
+
   return (
-    <>
-      <section className="category-tab">
+    <section className="category-tab">
+      <div
+        data-current="Tab 1"
+        data-easing="ease-in-out"
+        data-duration-in="300"
+        data-duration-out="300"
+        className="tabs-2 w-tabs"
+      >
         <div
-          data-current="Tab 1"
-          data-easing="ease-in-out"
-          data-duration-in="300"
-          data-duration-out="300"
-          className="tabs-2 w-tabs"
+          data-aos="fade-up"
+          data-aos-duration="1000"
+          className="tabs-content-wrapper w-tab-content"
         >
           <div
-            data-aos="fade-up"
-            data-aos-duration="1000"
-            className="tabs-content-wrapper w-tab-content"
+            data-w-tab="Tab 1"
+            className="tab-content-item w-tab-pane w--tab-active"
           >
-            <div
-              data-w-tab="Tab 1"
-              className="tab-content-item w-tab-pane w--tab-active"
-            >
-              <div className="tab-content">
-                <div className="w-layout-grid table-category-grid ">
-                  {dummySlides.map((card, index) => (
-                    <ConcertCard slide={card} />
-                  ))}
-                </div>
+            <div className="tab-content">
+              <div className="w-layout-grid table-category-grid ">
+                {eventList.map((card, index) => (
+                  <ConcertCard slide={card} />
+                ))}
               </div>
             </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

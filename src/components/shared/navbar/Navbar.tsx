@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
 
-const Navbar = () => {
-  const [isSticky, setIsSticky] = useState(false);
+const Navbar = ({ isStickyTrue }: any) => {
+  const [isSticky, setIsSticky] = useState(isStickyTrue || false);
 
   useEffect(() => {
+    if (isStickyTrue) {
+      return;
+    }
     const handleScroll = () => {
-      setIsSticky(window.scrollY > 10);
+      const scrollThreshold = 450;
+      setIsSticky(window.scrollY > scrollThreshold);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -16,15 +20,15 @@ const Navbar = () => {
   return (
     <div>
       <header
-        className={`bg-white z-50 w-full ${
+        className={`bg-white z-50 w-full transition-all duration-500 ease-in-out ${
           isSticky ? "fixed top-0 shadow-md" : ""
         }`}
       >
         <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
           <div
             className={`flex items-center justify-between ${
-              isSticky ? " h-16 lg:h-[7rem] py" : " h-16 lg:h-[72px]"
-            }`}
+              isSticky ? "h-16 lg:h-[7rem] py" : "h-16 lg:h-[72px]"
+            } transition-all duration-500 ease-in-out`}
           >
             {/* Mobile Menu Button */}
             <button
@@ -50,7 +54,7 @@ const Navbar = () => {
             {/* Logo */}
             <div className="flex items-center flex-shrink-0 ml-4 lg:ml-0">
               <a href="#" title="" className="inline-flex">
-                <span className="sr-only"> Rareblocks logo </span>
+                <span className="sr-only">Rareblocks logo</span>
                 <img
                   className="w-auto h-8"
                   src="https://cdn.rareblocks.xyz/collection/clarity-ecommerce/images/logo.svg"
@@ -61,7 +65,7 @@ const Navbar = () => {
 
             {/* Navigation Links (only show when not sticky) */}
             {!isSticky && (
-              <div className="hidden lg:flex lg:items-center lg:ml-16 xl:ml-24 lg:space-x-8">
+              <div className="hidden  lg:flex lg:items-center lg:ml-16 xl:ml-24 lg:space-x-8">
                 <a
                   href="#"
                   className="text-sm font-medium text-gray-900 transition-all duration-200 rounded hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
@@ -85,7 +89,7 @@ const Navbar = () => {
 
             {/* Header Component (only show when sticky) */}
             {isSticky && (
-              <div className="shadow-xl ml-10 rounded-full">
+              <div className="hidden sm:inline shadow-xl ml-10 rounded-full w-full transform transition-all duration-500 ease-in-out">
                 <Header />
               </div>
             )}

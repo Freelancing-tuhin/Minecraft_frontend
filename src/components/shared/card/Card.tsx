@@ -9,7 +9,7 @@ import {
 } from "@tabler/icons-react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ConcertCard = ({ setIsVisible, slide }: any) => {
   const handleNavigate = () => {};
@@ -100,7 +100,8 @@ const ConcertCard = ({ setIsVisible, slide }: any) => {
   //   const eventTimeClass = getDynamicClass(screenWidth);
 
   return (
-    <div
+    <Link
+      to={`/event/${slide._id}`}
       id="w-node-fcce1b21-3954-7070-54ad-f0ea51f92fae-3890e283"
       className="table-list-card"
     >
@@ -110,7 +111,7 @@ const ConcertCard = ({ setIsVisible, slide }: any) => {
           <div className="property-image-inner">
             <div className="p-image-inner-info-top">
               <div className="card-image-left-meta">
-                <p className="category">{slide?.category.name}</p>
+                <p className="category">{slide?.category}</p>
               </div>
               <div className="card-image-left-meta">
                 {/* {bookmarks.includes(slide.id) ? ( */}
@@ -140,8 +141,8 @@ const ConcertCard = ({ setIsVisible, slide }: any) => {
                       <img
                         loading="lazy"
                         src={
-                          slide.user_profile?.photo
-                            ? `https://s3.ap-south-1.amazonaws.com/high-table-2024/public/photo/members/${slide.user_profile?.photo}`
+                          slide?.organizerId?.profile_pic
+                            ? `${slide.organizerId?.profile_pic}`
                             : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4YreOWfDX3kK-QLAbAL4ufCPc84ol2MA8Xg&s"
                         }
                         alt=""
@@ -150,9 +151,7 @@ const ConcertCard = ({ setIsVisible, slide }: any) => {
                     </div>
                     <p className="host-name text-white pt-2">
                       {" "}
-                      {slide?.first_name}
-                      &nbsp;
-                      {slide?.last_name}
+                      {slide?.organizerId?.full_name}
                     </p>
                   </div>
                 </div>
@@ -167,7 +166,7 @@ const ConcertCard = ({ setIsVisible, slide }: any) => {
             </div>
             <img
               loading="lazy"
-              src={`${slide?.media}`}
+              src={`${slide?.banner_Image}`}
               alt=""
               className="table-image-oncard placeholderimg"
             />
@@ -186,13 +185,13 @@ const ConcertCard = ({ setIsVisible, slide }: any) => {
         text-base overflow-hidden whitespace-nowrap text-ellipsis sm:max-w-[20ch] md:max-w-[15ch] 2xl:max-w-[20ch]
         "
           >
-            {slide.title}
+            {slide?.space_name}
           </div>
           <div
             className="px-1 font-sans
         text-base flex gap-1 items-center justify-between"
           >
-            {slide.bookmarks}
+            {slide?.ratings}
             <IconStarFilled size={18} color="#fdd663" />
           </div>
         </div>
@@ -207,10 +206,7 @@ const ConcertCard = ({ setIsVisible, slide }: any) => {
             </div>
             <div className="card-location feature-label max-h-12 overflow-hidden truncate">
               <span className="event-date">
-                {formatDate(slide?.event_date)}
-              </span>
-              <span className={`event-time`}>
-                , {formatTime(slide?.event_date)}
+                {formatDate(slide?.startDate)} - {formatDate(slide?.endDate)}
               </span>
             </div>
           </div>
@@ -247,7 +243,7 @@ const ConcertCard = ({ setIsVisible, slide }: any) => {
           </div>
         </div> */}
       </div>
-    </div>
+    </Link>
   );
 };
 

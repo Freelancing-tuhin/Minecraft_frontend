@@ -1,23 +1,36 @@
 import { AdminLogin } from "./apis/auth/login";
-import { createProvider, deleteProvider, editProvider, getAllProviders } from "./apis/providers/providers";
-import { createService, deleteService, editService, getAllServices } from "./apis/services/service";
-
+import { getAllEvents, getEventDetails } from "./apis/events/events.api";
+import {
+  createProvider,
+  deleteProvider,
+  editProvider,
+  getAllProviders,
+} from "./apis/providers/providers";
+import {
+  createService,
+  deleteService,
+  editService,
+  getAllServices,
+} from "./apis/services/service";
 
 export const api = {
   auth: {
-    AdminLogin
+    AdminLogin,
   },
-  providers:{
+  providers: {
     getAllProviders,
     deleteProvider,
     editProvider,
-    createProvider
+    createProvider,
   },
-  services:{
+  services: {
     getAllServices,
     createService,
     editService,
-    deleteService
-  }
-  
+    deleteService,
+  },
+  events: {
+    getAllEvents,
+    getEventDetails,
+  },
 };
