@@ -4,6 +4,7 @@ import Footer from "../../components/shared/footer/Footer";
 import { api } from "../../utils";
 import { useEffect, useState } from "react";
 import EventBanner from "../../components/main/eventDetails/evnetBanner/Eventanner";
+import EventDescription from "../../components/main/eventDetails/eventdescription/EventDescription";
 
 const EventDetails = () => {
   const [eventDetail, setEventDetail] = useState<any>(null);
@@ -42,6 +43,7 @@ const EventDetails = () => {
           className="body pt-16 sm:pt-28"
         >
           <EventBanner data={eventDetail} />
+          <EventDescription data={eventDetail} />
           <Footer />
         </section>
       </div>
