@@ -123,34 +123,53 @@ const StallList = ({ data, payments = [] }: StallListProps) => {
           Book Now
         </div>
       );
-    }
-
-    // Payment exists - check status
-    if (paymentForStall.booking_status === "Pending") {
-      if (
-        paymentForStall.paymentStatus === "Pending" &&
-        paymentForStall.transactionId
-      ) {
-        return (
-          <div
-            style={{
-              backgroundColor: "#ff9800",
-              color: "white",
-              padding: "10px 20px",
-              border: "none",
-              borderRadius: "4px",
-              width: "100%",
-              marginTop: "15px",
-              fontSize: "16px",
-              fontWeight: "600",
-              textAlign: "center",
-            }}
-          >
-            Order Pending
-          </div>
-        );
-      }
-      // For Pending payment status, show Pay Now
+    } else if (
+      paymentForStall.transactionId &&
+      paymentForStall.booking_status === "Success"
+    ) {
+      return (
+        <div
+          onClick={() => handleViewInvoice(paymentForStall)}
+          style={{
+            backgroundColor: "#4caf50",
+            color: "white",
+            padding: "10px 20px",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+            width: "100%",
+            marginTop: "15px",
+            fontSize: "16px",
+            fontWeight: "600",
+            textAlign: "center",
+          }}
+        >
+          View Invoice
+        </div>
+      );
+    } else if (
+      paymentForStall.transactionId &&
+      paymentForStall.booking_status === "Pending"
+    ) {
+      return (
+        <div
+          style={{
+            backgroundColor: "#ff9800",
+            color: "white",
+            padding: "10px 20px",
+            border: "none",
+            borderRadius: "4px",
+            width: "100%",
+            marginTop: "15px",
+            fontSize: "16px",
+            fontWeight: "600",
+            textAlign: "center",
+          }}
+        >
+          Order Pending
+        </div>
+      );
+    } else if (!paymentForStall?.transactionId) {
       return (
         <div
           onClick={() => handlePay(paymentForStall)}
@@ -171,108 +190,176 @@ const StallList = ({ data, payments = [] }: StallListProps) => {
           Pay Now
         </div>
       );
-    } else if (paymentForStall.paymentStatus === "Completed") {
-      if (paymentForStall.booking_status === "Success") {
-        // For Completed payment and Success booking, show View Invoice
-        return (
-          <div
-            onClick={() => handleViewInvoice(paymentForStall)}
-            style={{
-              backgroundColor: "#4caf50",
-              color: "white",
-              padding: "10px 20px",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-              width: "100%",
-              marginTop: "15px",
-              fontSize: "16px",
-              fontWeight: "600",
-              textAlign: "center",
-            }}
-          >
-            View Invoice
-          </div>
-        );
-      } else if (paymentForStall.booking_status === "Canceled") {
-        return (
-          <div
-            style={{
-              backgroundColor: "#f44336",
-              color: "white",
-              padding: "10px 20px",
-              border: "none",
-              borderRadius: "4px",
-              width: "100%",
-              marginTop: "15px",
-              fontSize: "16px",
-              fontWeight: "600",
-              textAlign: "center",
-            }}
-          >
-            Booking Canceled
-          </div>
-        );
-      }
-    } else if (paymentForStall.paymentStatus === "Failed") {
-      return (
-        <div
-          style={{
-            backgroundColor: "#f44336",
-            color: "white",
-            padding: "10px 20px",
-            border: "none",
-            borderRadius: "4px",
-            width: "100%",
-            marginTop: "15px",
-            fontSize: "16px",
-            fontWeight: "600",
-            textAlign: "center",
-          }}
-        >
-          Payment Failed
-        </div>
-      );
-    } else if (paymentForStall.paymentStatus === "Refunded") {
-      return (
-        <div
-          style={{
-            backgroundColor: "#9e9e9e",
-            color: "white",
-            padding: "10px 20px",
-            border: "none",
-            borderRadius: "4px",
-            width: "100%",
-            marginTop: "15px",
-            fontSize: "16px",
-            fontWeight: "600",
-            textAlign: "center",
-          }}
-        >
-          Refunded
-        </div>
-      );
     }
 
-    // Default case
-    return (
-      <div
-        style={{
-          backgroundColor: "#9e9e9e",
-          color: "white",
-          padding: "10px 20px",
-          border: "none",
-          borderRadius: "4px",
-          width: "100%",
-          marginTop: "15px",
-          fontSize: "16px",
-          fontWeight: "600",
-          textAlign: "center",
-        }}
-      >
-        View Details
-      </div>
-    );
+    // if (!paymentForStall.transactionId) {
+    //   <div
+    //     onClick={() => handlePay(paymentForStall)}
+    //     style={{
+    //       backgroundColor: "#2196f3",
+    //       color: "white",
+    //       padding: "10px 20px",
+    //       border: "none",
+    //       borderRadius: "4px",
+    //       cursor: "pointer",
+    //       width: "100%",
+    //       marginTop: "15px",
+    //       fontSize: "16px",
+    //       fontWeight: "600",
+    //       textAlign: "center",
+    //     }}
+    //   >
+    //     Pay Now
+    //   </div>;
+    // }
+    // // Payment exists - check status
+    // if (
+    //   paymentForStall.booking_status === "Pending" &&
+    //   paymentForStall.paymentStatus === "Completed"
+    // ) {
+    //   if (paymentForStall.transactionId) {
+    //     return (
+    //       <div
+    //         style={{
+    //           backgroundColor: "#ff9800",
+    //           color: "white",
+    //           padding: "10px 20px",
+    //           border: "none",
+    //           borderRadius: "4px",
+    //           width: "100%",
+    //           marginTop: "15px",
+    //           fontSize: "16px",
+    //           fontWeight: "600",
+    //           textAlign: "center",
+    //         }}
+    //       >
+    //         Order Pending
+    //       </div>
+    //     );
+    //   }
+    //   // For Pending payment status, show Pay Now
+    //   return (
+    //     <div
+    //       onClick={() => handlePay(paymentForStall)}
+    //       style={{
+    //         backgroundColor: "#2196f3",
+    //         color: "white",
+    //         padding: "10px 20px",
+    //         border: "none",
+    //         borderRadius: "4px",
+    //         cursor: "pointer",
+    //         width: "100%",
+    //         marginTop: "15px",
+    //         fontSize: "16px",
+    //         fontWeight: "600",
+    //         textAlign: "center",
+    //       }}
+    //     >
+    //       Pay Now
+    //     </div>
+    //   );
+    // } else if (paymentForStall.paymentStatus === "Completed") {
+    //   if (paymentForStall.booking_status === "Success") {
+    //     // For Completed payment and Success booking, show View Invoice
+    //     return (
+    //       <div
+    //         onClick={() => handleViewInvoice(paymentForStall)}
+    //         style={{
+    //           backgroundColor: "#4caf50",
+    //           color: "white",
+    //           padding: "10px 20px",
+    //           border: "none",
+    //           borderRadius: "4px",
+    //           cursor: "pointer",
+    //           width: "100%",
+    //           marginTop: "15px",
+    //           fontSize: "16px",
+    //           fontWeight: "600",
+    //           textAlign: "center",
+    //         }}
+    //       >
+    //         View Invoice
+    //       </div>
+    //     );
+    //   } else if (paymentForStall.booking_status === "Canceled") {
+    //     return (
+    //       <div
+    //         style={{
+    //           backgroundColor: "#f44336",
+    //           color: "white",
+    //           padding: "10px 20px",
+    //           border: "none",
+    //           borderRadius: "4px",
+    //           width: "100%",
+    //           marginTop: "15px",
+    //           fontSize: "16px",
+    //           fontWeight: "600",
+    //           textAlign: "center",
+    //         }}
+    //       >
+    //         Booking Canceled
+    //       </div>
+    //     );
+    //   }
+    // } else if (paymentForStall.paymentStatus === "Failed") {
+    //   return (
+    //     <div
+    //       style={{
+    //         backgroundColor: "#f44336",
+    //         color: "white",
+    //         padding: "10px 20px",
+    //         border: "none",
+    //         borderRadius: "4px",
+    //         width: "100%",
+    //         marginTop: "15px",
+    //         fontSize: "16px",
+    //         fontWeight: "600",
+    //         textAlign: "center",
+    //       }}
+    //     >
+    //       Payment Failed
+    //     </div>
+    //   );
+    // } else if (paymentForStall.paymentStatus === "Refunded") {
+    //   return (
+    //     <div
+    //       style={{
+    //         backgroundColor: "#9e9e9e",
+    //         color: "white",
+    //         padding: "10px 20px",
+    //         border: "none",
+    //         borderRadius: "4px",
+    //         width: "100%",
+    //         marginTop: "15px",
+    //         fontSize: "16px",
+    //         fontWeight: "600",
+    //         textAlign: "center",
+    //       }}
+    //     >
+    //       Refunded
+    //     </div>
+    //   );
+    // }
+
+    // // Default case
+    // return (
+    //   <div
+    //     style={{
+    //       backgroundColor: "#9e9e9e",
+    //       color: "white",
+    //       padding: "10px 20px",
+    //       border: "none",
+    //       borderRadius: "4px",
+    //       width: "100%",
+    //       marginTop: "15px",
+    //       fontSize: "16px",
+    //       fontWeight: "600",
+    //       textAlign: "center",
+    //     }}
+    //   >
+    //     View Details
+    //   </div>
+    // );
   };
 
   const handlePay = (payment: PaymentData) => {
