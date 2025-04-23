@@ -15,7 +15,7 @@ const EventDetails = () => {
     setLoading(true);
     try {
       const response = await api.events.getEventDetails({
-        eventId: "67e3d3b7633052ca0f50a7b4",
+        eventId: "6808ba3e9f70d1521e87b33d",
         userId: "67e2b75a886e962459042cc9",
       });
       console.log("======>event details", response);

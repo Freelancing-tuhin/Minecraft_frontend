@@ -36,7 +36,8 @@ interface StallListProps {
 const RAZORPAY_KEY_ID = "rzp_test_WOvg0OAJCnGejI";
 
 const StallList = ({ data, payments = [] }: StallListProps) => {
-  const handlePaymentRazorPay = async (order_id: string) => {
+  const handlePaymentRazorPay = async (order_id: string, bookingId: string) => {
+    console.log("=====>bookingId", bookingId);
     const options = {
       key: RAZORPAY_KEY_ID,
       amount: 1 * 100,
@@ -45,8 +46,14 @@ const StallList = ({ data, payments = [] }: StallListProps) => {
       order_id: order_id,
       description: "Transaction to book a table",
       image: "/images/High_Table_Logo.png",
-      handler: (response: any) => {
+      handler: async (response: any) => {
         console.log(response);
+        const payload = {
+          bookingId: bookingId,
+          transactionId: response.razorpay_payment_id,
+        };
+        const result = await api.booking.updateBooking(payload);
+        console.log("=====>payment status", result);
       },
       prefill: {
         name: "userName",
@@ -72,7 +79,7 @@ const StallList = ({ data, payments = [] }: StallListProps) => {
     try {
       const payload = {
         userId: "67e2b75a886e962459042cc9",
-        eventId: "67e3d3b7633052ca0f50a7b4",
+        eventId: "6808ba3e9f70d1521e87b33d",
         ticketId: stall?._id,
         ticketsCount: 1,
         receipt: "REC123359",
@@ -81,7 +88,7 @@ const StallList = ({ data, payments = [] }: StallListProps) => {
       const response = await api.booking.createBooking(payload);
       console.log("======>response", response);
       if (response?.payment) {
-        handlePaymentRazorPay(response?.payment?.id);
+        handlePaymentRazorPay(response?.payment?.id, response?.result?._id);
       }
     } catch (error) {
       console.error("Booking error:", error);
@@ -119,9 +126,9 @@ const StallList = ({ data, payments = [] }: StallListProps) => {
     }
 
     // Payment exists - check status
-    if (paymentForStall.paymentStatus === "Pending") {
+    if (paymentForStall.booking_status === "Pending") {
       if (
-        paymentForStall.booking_status === "Pending" &&
+        paymentForStall.paymentStatus === "Pending" &&
         paymentForStall.transactionId
       ) {
         return (
@@ -272,7 +279,7 @@ const StallList = ({ data, payments = [] }: StallListProps) => {
     // Implement payment logic here
     console.log("Initiate payment for:", payment);
     if (payment?.orderId) {
-      handlePaymentRazorPay(payment?.orderId || "");
+      //   handlePaymentRazorPay(payment?.orderId ,);
     } else {
       alert("Order ID not found. Please try again later.");
     }

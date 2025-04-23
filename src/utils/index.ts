@@ -1,5 +1,5 @@
 import { AdminLogin } from "./apis/auth/login";
-import { createBooking } from "./apis/booking/booking";
+import { createBooking, updateBooking } from "./apis/booking/booking";
 import { getAllEvents, getEventDetails } from "./apis/events/events.api";
 import {
   createProvider,
@@ -36,5 +36,6 @@ export const api = {
   },
   booking: {
     createBooking,
+    updateBooking,
   },
 };

@@ -30,3 +30,27 @@ export const createBooking = async (payload: Payload) => {
     throw error;
   }
 };
+
+export const updateBooking = async (payload: Payload) => {
+  try {
+    const endpoint = `${initialRoute}/confirm-booking`;
+    const response = await patch(endpoint, payload, {
+      ...headers,
+    });
+    if (response) {
+      const {
+        data: { message },
+      } = response;
+      if (message === MESSAGE.patch.succ) {
+        const {
+          data: { result },
+        } = response;
+        return result;
+      }
+    }
+    throw new Error();
+  } catch (error: unknown) {
+    console.log(error);
+    throw error;
+  }
+};
