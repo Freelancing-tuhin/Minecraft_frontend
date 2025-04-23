@@ -1,4 +1,5 @@
 import { AdminLogin } from "./apis/auth/login";
+import { createBooking } from "./apis/booking/booking";
 import { getAllEvents, getEventDetails } from "./apis/events/events.api";
 import {
   createProvider,
@@ -32,5 +33,8 @@ export const api = {
   events: {
     getAllEvents,
     getEventDetails,
+  },
+  booking: {
+    createBooking,
   },
 };

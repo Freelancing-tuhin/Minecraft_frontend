@@ -5,19 +5,6 @@ const RAZORPAY_KEY_ID = "rzp_test_WOvg0OAJCnGejI";
 
 const RazorPayBtn = () => {
   const handlePayment = async (order_id: string) => {
-    // if (
-    //   typeof window !== "undefined" &&
-    //   typeof (window as any).Razorpay === "undefined"
-    // ) {
-    //   alert("Razorpay SDK not loaded. Please check your internet connection.");
-    //   return;
-    // }
-
-    // if (!localStorage.getItem("email")) {
-    //   alert("Please login first.");
-    //   return;
-    // }
-
     const options = {
       key: RAZORPAY_KEY_ID,
       amount: 1 * 100,
