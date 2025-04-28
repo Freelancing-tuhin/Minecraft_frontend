@@ -2,11 +2,13 @@ import Head from "../../components/shared/Head/Head";
 import Navbar from "../../components/shared/navbar/Navbar";
 import Footer from "../../components/shared/footer/Footer";
 import { api } from "../../utils";
-import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import EventBanner from "../../components/main/eventDetails/evnetBanner/Eventanner";
 import EventDescription from "../../components/main/eventDetails/eventdescription/EventDescription";
 
 const EventDetails = () => {
+  const { id } = useParams<{ id: string }>();
   const [eventDetail, setEventDetail] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -15,7 +17,7 @@ const EventDetails = () => {
     setLoading(true);
     try {
       const response = await api.events.getEventDetails({
-        eventId: "6808ba3e9f70d1521e87b33d",
+        eventId: id,
         userId: "67e2b75a886e962459042cc9",
       });
       console.log("======>event details", response);

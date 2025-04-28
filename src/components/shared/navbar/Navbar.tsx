@@ -89,7 +89,7 @@ const Navbar = ({ isStickyTrue }: any) => {
 
             {/* Header Component (only show when sticky) */}
             {isSticky && (
-              <div className="hidden sm:inline shadow-xl ml-10 rounded-full w-full transform transition-all duration-500 ease-in-out">
+              <div className="hidden sm:inline shadow-xl ml-10 rounded-full w- transform transition-all duration-500 ease-in-out">
                 <Header />
               </div>
             )}
