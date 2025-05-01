@@ -35,7 +35,7 @@ const GoggleLogin = () => {
     <div>
       <button
         onClick={() => login()}
-        className="flex items-center bg-white border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800 
+        className="flex items-center bg-white w-full border justify-center border-gray-300 rounded-lg shadow-md px-6 py-2 rounded-2xl h-14 text-sm font-medium text-gray-800 
         hover:bg-gray-200 "
       >
         <svg
@@ -93,7 +93,7 @@ const GoggleLogin = () => {
             </g>{" "}
           </g>{" "}
         </svg>
-        <span>Continue with Google</span>
+        <span className="text-base translate-x-2">Continue with Google</span>
       </button>
     </div>
   );

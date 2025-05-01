@@ -6,10 +6,12 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import EventBanner from "../../components/main/eventDetails/evnetBanner/Eventanner";
 import EventDescription from "../../components/main/eventDetails/eventdescription/EventDescription";
+import ShareModal from "../../components/shared/shareModal/ShareModal";
 
 const EventDetails = () => {
   const { id } = useParams<{ id: string }>();
   const [eventDetail, setEventDetail] = useState<any>(null);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -44,8 +46,18 @@ const EventDetails = () => {
           data-w-id="5f9cc665505a9a8ec46d478c"
           className="body pt-16 sm:pt-28"
         >
-          <EventBanner data={eventDetail} />
+          <EventBanner
+            data={eventDetail}
+            isShareModalOpen={isShareModalOpen}
+            setIsShareModalOpen={setIsShareModalOpen}
+          />
           <EventDescription data={eventDetail} />
+          <ShareModal
+            data={eventDetail}
+            setIsModalOpen={setIsShareModalOpen}
+            isShareModalOpen={isShareModalOpen}
+          />
+
           <Footer />
         </section>
       </div>

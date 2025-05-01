@@ -1,4 +1,5 @@
 import { AdminLogin } from "./apis/auth/login";
+import { signupUser } from "./apis/auth/signUp";
 import { createBooking, updateBooking } from "./apis/booking/booking";
 import { getAllEvents, getEventDetails } from "./apis/events/events.api";
 import {
@@ -17,6 +18,7 @@ import {
 export const api = {
   auth: {
     AdminLogin,
+    signupUser,
   },
   providers: {
     getAllProviders,

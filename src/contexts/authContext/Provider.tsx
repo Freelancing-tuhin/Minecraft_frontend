@@ -4,12 +4,25 @@ import reducer from "./reducer";
 import { useCallback, useReducer } from "react";
 import { ContextProviderProps } from "../context.types";
 import AuthContext from "./authContext";
-
 import { Store } from "../../@types/contexts/authContext/store.types";
 
-const getUserFromLocalStorage = () => {
-  const user = localStorage.getItem("@user");
-  return user ? JSON.parse(user) : null;
+const getUserFromLocalStorage = (): any | null => {
+  try {
+    const user = localStorage.getItem("@user");
+    if (!user) return null;
+
+    // Handle case where it might be a JWT token
+    if (user.startsWith("eyJhbGciOi")) {
+      console.warn("Found JWT token in @user storage, expected user object");
+      return null;
+    }
+
+    return JSON.parse(user);
+  } catch (error) {
+    console.error("Failed to parse user from localStorage", error);
+    localStorage.removeItem("@user"); // Clean up invalid data
+    return null;
+  }
 };
 
 const initialState: Store = {
@@ -17,23 +30,49 @@ const initialState: Store = {
   user: getUserFromLocalStorage(),
 };
 
+// Updated AuthContextProvider.tsx
 const AuthContextProvider = ({ children }: ContextProviderProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const setUser = useCallback(
     (user: any | null) => {
-      dispatch({ type: actions.SET_USER, payload: { ...state, user } });
+      // Create a safe user object without sensitive data
+      const safeUser = user
+        ? {
+            id: user._id,
+            email: user.email,
+            name: user.full_name,
+            age: user.age,
+            gender: user.gender,
+            address: user.address,
+            createdAt: user.createdAt,
+          }
+        : null;
+
+      dispatch({
+        type: actions.SET_USER,
+        payload: {
+          isLoggedIn: !!user,
+          user: safeUser,
+        },
+      });
+
       if (user) {
-        localStorage.setItem("@user", JSON.stringify(user));
+        try {
+          localStorage.setItem("@user", JSON.stringify(safeUser));
+        } catch (error) {
+          console.error("Failed to store user in localStorage", error);
+        }
       } else {
         localStorage.removeItem("@user");
       }
     },
-    [state]
+    [dispatch] // Changed dependency from state to dispatch
   );
 
   const value = {
     user: state.user,
+    isLoggedIn: state.isLoggedIn,
     setUser,
   };
 

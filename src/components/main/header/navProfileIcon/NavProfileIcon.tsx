@@ -1,172 +1,96 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState } from "react";
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { IconUser, IconUserFilled } from "@tabler/icons-react";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-const NavProfileIcon = ({ setIsVisible }: any) => {
-  const [showModal, setShowModal] = useState(false); // State to control modal visibility
-  const [isHovering, setIsHovering] = useState(false); // State to track hover
-
-  let timer: any;
-
-  const accessToken = localStorage.getItem("@user");
-
-  const userPhoto = localStorage.getItem("@userPhoto");
-
-  // Handle hover on profile icon
-  const handleMouseEnter = () => {
-    clearTimeout(timer); // Clear any pending hide actions
-    setIsHovering(true);
-    setShowModal(true);
-  };
-
-  // Handle hover out from profile icon or modal
-  const handleMouseLeave = () => {
-    timer = setTimeout(() => {
-      setIsHovering(false); // After delay, hide modal if not hovering
-      setShowModal(false);
-    }, 0); // Modal stays visible for 300ms after mouse leaves
-  };
-
+const NavProfileIcon: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
-    <div
-      className="relative group"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      {/* Profile Icon */}
-      <div className="navbar_dropdown-toggle w-dropdown-toggle">
-        {userPhoto ? (
-          <div
-            style={{
-              backgroundImage: `url(${userPhoto})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              width: "40px",
-              height: "40px",
-            }}
-            className="user-image rounded-full"
-            aria-label="Profile"
+    <div className="relative" ref={dropdownRef}>
+      {!isOpen ? (
+        <button
+          type="button"
+          className="p-2 -m-2 text-gray-700 hover:text-gray-900 transition-colors"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen}
+          aria-label="Profile menu"
+        >
+          <svg
+            className="w-6 h-6"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+            />
+          </svg>
+        </button>
+      ) : (
+        <button
+          type="button"
+          className="p-2 -m-2 text-gray-700 hover:text-gray-900 transition-colors"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen}
+          aria-label="Profile menu"
+        >
+          <IconUserFilled />
+        </button>
+      )}
+
+      {isOpen && (
+        <div className="absolute right-0 mt-2 w-48 px-2 text-md bg-white rounded-2xl shadow-lg py-1 z-50 border border-gray-100">
+          <ProfileMenuItem
+            label="Profile"
+            onClick={() => navigate("/profile")}
           />
-        ) : (
-          <div className="nav-icon">
-            <div className="user" />
-          </div>
-        )}
-      </div>
-
-      {/* Modal */}
-      {(showModal || isHovering) && (
-        <nav className="navbar_dropdown-list nav-width user-dropdown w-dropdown-list w--open">
-          <div className="navbar_dropdown-content">
-            <div className="navbar_dropdown-link-list">
-              {accessToken ? (
-                <>
-                  <Link
-                    to="/profile/myprofile"
-                    className="navbar_dropdown-link user-drop-down w-inline-block"
-                  >
-                    <div className="v3-uui-navbar08_item-right">
-                      <div className="notification-title">Profile</div>
-                    </div>
-                  </Link>
-                  <a
-                    id="w-node-_8a23e3a0-0bf3-850e-05da-75357fc8f557-7fc8f4a5"
-                    href="/profile/myprofile"
-                    className="navbar_dropdown-link user-drop-down w-inline-block"
-                  >
-                    <div className="v3-uui-navbar08_item-right">
-                      <div className="notification-title">My Bookings</div>
-                    </div>
-                  </a>
-                  <Link
-                    id="w-node-_8a23e3a0-0bf3-850e-05da-75357fc8f55b-7fc8f4a5"
-                    to="/wishlist"
-                    className="navbar_dropdown-link user-drop-down w-inline-block"
-                  >
-                    <div className="v3-uui-navbar08_item-right">
-                      <div className="notification-title">My Wishlist</div>
-                    </div>
-                  </Link>
-                  <Link
-                    id="w-node-_8a23e3a0-0bf3-850e-05da-75357fc8f55b-7fc8f4a5"
-                    to="/create-table"
-                    className="navbar_dropdown-link user-drop-down w-inline-block"
-                  >
-                    <div className="v3-uui-navbar08_item-right">
-                      <div className="notification-title">Float a Table</div>
-                    </div>
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <div
-                    onClick={() => setIsVisible(true)}
-                    className="navbar_dropdown-link user-drop-down w-inline-block"
-                  >
-                    <div className="v3-uui-navbar08_item-right">
-                      <div className="notification-title">Login</div>
-                    </div>
-                  </div>
-                  {/* <div
-                    onClick={() => setIsVisible(true)}
-                    id="w-node-_8a23e3a0-0bf3-850e-05da-75357fc8f557-7fc8f4a5"
-                    className="navbar_dropdown-link user-drop-down w-inline-block"
-                  >
-                    <div className="v3-uui-navbar08_item-right">
-                      <div className="notification-title">Sign Up</div>
-                    </div>
-                  </div> */}
-                </>
-              )}
-
-              <a
-                id="w-node-_8a23e3a0-0bf3-850e-05da-75357fc8f55f-7fc8f4a5"
-                href="mailto:support@hightable.ai"
-                className="navbar_dropdown-link user-drop-down w-inline-block"
-              >
-                <div className="v3-uui-navbar08_item-right">
-                  <div className="notification-title">Help</div>
-                </div>
-              </a>
-              {accessToken && (
-                <>
-                  <div
-                    id="w-node-_8a23e3a0-0bf3-850e-05da-75357fc8f563-7fc8f4a5"
-                    className="logout"
-                  >
-                    <a
-                      id="w-node-_8a23e3a0-0bf3-850e-05da-75357fc8f564-7fc8f4a5"
-                      className="navbar_dropdown-link user-drop-down mg-top-7 w-inline-block"
-                      onClick={() => {
-                        localStorage.removeItem("@user");
-                        localStorage.removeItem("@userRefreshToken");
-                        localStorage.removeItem("@userName");
-                        localStorage.removeItem("@userPhone");
-                        localStorage.removeItem("@userAccount");
-                        localStorage.removeItem("@userPhoto");
-
-                        // localStorage.clear();
-                        navigate(`/`);
-                        window.location.reload();
-                      }}
-                    >
-                      <div className="v3-uui-navbar08_item-right">
-                        <div className="notification-title logout-red">
-                          Logout
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-        </nav>
+          <ProfileMenuItem label="My Bookings" />
+          <ProfileMenuItem label="My Wishlist" />
+          <ProfileMenuItem label="Float a Table" />
+          <div className="border-t border-gray-100 my-1"></div>
+          <ProfileMenuItem label="Help" />
+          <ProfileMenuItem label="Logout" />
+        </div>
       )}
     </div>
+  );
+};
+
+interface ProfileMenuItemProps {
+  label: string;
+  onClick?: () => void;
+}
+
+const ProfileMenuItem: React.FC<ProfileMenuItemProps> = ({
+  label,
+  onClick,
+}) => {
+  return (
+    <button
+      className=" w-full text-center px-4 py-2 text-xl text-gray-700 rounded-full hover:bg-gray-200 transition-colors"
+      onClick={onClick}
+    >
+      {label}
+    </button>
   );
 };
 

@@ -8,12 +8,7 @@ import { Link } from "react-router-dom";
 import { formatDateTime } from "../../../../utils/commonFunctions/dateFormater";
 import { IconCalendarWeek, IconMapPin } from "@tabler/icons-react";
 
-const EventBanner = ({
-  data,
-  fetchData,
-  setIsShareModalOpen,
-  setIsVisible,
-}: any) => {
+const EventBanner = ({ data, isShareModalOpen, setIsShareModalOpen }: any) => {
   const accessToken = localStorage.getItem("@user");
 
   //   const { bookmarks, toggleBookmark } = useBookmarks();
