@@ -3,6 +3,7 @@ import {
   IconBookmark,
   IconCalendarWeek,
   IconHeart,
+  IconHeartFilled,
   IconLocation,
   IconMapPin,
   IconStarFilled,
@@ -10,11 +11,13 @@ import {
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useBookmarks } from "../../../contexts/bookMarkContext/BookMarkContext";
 
 const ConcertCard = ({ setIsVisible, slide }: any) => {
   const handleNavigate = () => {};
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const { isBookmarked, toggleBookmark } = useBookmarks();
 
   useEffect(() => {
     // Function to update the screen width
@@ -121,7 +124,21 @@ const ConcertCard = ({ setIsVisible, slide }: any) => {
                   // onClick={handleBookmark}
                 >
                   <div className="w-embed trnasparentbg" aria-disabled>
-                    <IconHeart size={24} color="white" />
+                    {isBookmarked(slide?._id) ? (
+                      // eslint-disable-next-line react/jsx-no-undef
+                      <div className="flex items-center">
+                        <IconHeartFilled
+                          size={24}
+                          className="text-yellow-500"
+                        />{" "}
+                      </div>
+                    ) : (
+                      // eslint-disable-next-line react/jsx-no-undef
+                      <div className="flex items-center">
+                        <IconHeart size={24} color="white" />
+                      </div>
+                    )}
+                    {/* <IconHeart size={24} color="white" /> */}
                   </div>
                 </a>
               </div>

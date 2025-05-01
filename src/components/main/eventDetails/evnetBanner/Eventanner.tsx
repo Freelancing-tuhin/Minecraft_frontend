@@ -6,19 +6,17 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import { formatDateTime } from "../../../../utils/commonFunctions/dateFormater";
-import { IconCalendarWeek, IconMapPin } from "@tabler/icons-react";
+import {
+  IconCalendarWeek,
+  IconHeart,
+  IconHeartFilled,
+  IconMapPin,
+} from "@tabler/icons-react";
+import { useBookmarks } from "../../../../contexts/bookMarkContext/BookMarkContext";
 
 const EventBanner = ({ data, isShareModalOpen, setIsShareModalOpen }: any) => {
   const accessToken = localStorage.getItem("@user");
-
-  //   const { bookmarks, toggleBookmark } = useBookmarks();
-
-  // Local state to track bookmarks count
-  //   const [localBookmarkCount, setLocalBookmarkCount] = useState(data.bookmarks);
-
-  //   useEffect(() => {
-  //     setLocalBookmarkCount(data.bookmarks); // Sync with initial data
-  //   }, [data.bookmarks]);
+  const { isBookmarked, toggleBookmark } = useBookmarks();
 
   return (
     <>
@@ -294,28 +292,33 @@ const EventBanner = ({ data, isShareModalOpen, setIsShareModalOpen }: any) => {
                             <div className="share-text">Share</div>
                           </a>
 
-                          {/* <a
+                          <a
                             href="#"
                             className="save-link_block w-inline-block"
                           >
-                            {localBookmarkCount > 0 && (
-                              <div className="whislist-count-mobilecard">
-                                {" "}
-                                {localBookmarkCount}
-                              </div>
-                            )}
-                            <BookMArkAction
-                              setIsVisible={setIsVisible}
-                              tableId={data.id}
-                              fetchData={() => {
-                                fetchData(); // Optional: If other parts of the app need updates
-                                setLocalBookmarkCount((prev) => prev + 1); // Update local count
+                            <button
+                              onClick={() => {
+                                console.log(
+                                  "=========>bookmark added",
+                                  data?._id
+                                );
+                                toggleBookmark(data);
                               }}
-                              userId={data?.creator_details.id}
-                              setLocalBookmarkCount={setLocalBookmarkCount}
-                              toggleBookmark={toggleBookmark}
-                            />
-                          </a> */}
+                            >
+                              {isBookmarked(data?._id) ? (
+                                // eslint-disable-next-line react/jsx-no-undef
+                                <div className="flex items-center gap-1">
+                                  <IconHeartFilled className="text-yellow-500" />{" "}
+                                  Added to Wishlist
+                                </div>
+                              ) : (
+                                // eslint-disable-next-line react/jsx-no-undef
+                                <div className="flex items-center gap-1">
+                                  <IconHeart /> Add to Wishlist
+                                </div>
+                              )}
+                            </button>
+                          </a>
                         </div>
                       </div>
                     </div>

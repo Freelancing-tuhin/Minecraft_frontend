@@ -5,15 +5,18 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import AuthContextProvider from "./contexts/authContext/Provider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { BookmarkProvider } from "./contexts/bookMarkContext/BookMarkContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <AuthContextProvider>
-    <GoogleOAuthProvider clientId="854940596531-pe3tvrsec94arejuc24fbl0ie44dn0kk.apps.googleusercontent.com">
-      <App />
-    </GoogleOAuthProvider>
+    <BookmarkProvider>
+      <GoogleOAuthProvider clientId="854940596531-pe3tvrsec94arejuc24fbl0ie44dn0kk.apps.googleusercontent.com">
+        <App />
+      </GoogleOAuthProvider>
+    </BookmarkProvider>
   </AuthContextProvider>
 );
 
