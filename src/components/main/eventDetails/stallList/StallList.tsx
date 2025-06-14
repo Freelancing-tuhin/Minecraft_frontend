@@ -5,10 +5,11 @@ interface StallData {
   id: string;
   ticketPrice?: number;
   dates: number;
-  area: string;
-  quantity: number;
+  stallArea: string;
+  totalQuantity: number;
   ticketName: string;
   _id: string;
+  available: any;
 }
 
 interface PaymentData {
@@ -105,7 +106,7 @@ const StallList = ({ data, payments = [] }: StallListProps) => {
       // No payment exists for this stall - show Book Now
       return (
         <div
-          onClick={() => handleBook(stall)}
+          onClick={() => stall?.available.length > 0 && handleBook(stall)}
           style={{
             backgroundColor: "black",
             color: "white",
@@ -120,7 +121,7 @@ const StallList = ({ data, payments = [] }: StallListProps) => {
             textAlign: "center",
           }}
         >
-          Book Now
+          {stall?.available.length > 0 ? <> Book Now</> : <>Sold Out</>}
         </div>
       );
     } else if (
@@ -209,13 +210,14 @@ const StallList = ({ data, payments = [] }: StallListProps) => {
   };
 
   return (
-    <div>
+    <div className="flex sm:flex gap-4 m-2 md:m-8">
       {data &&
         data.map((stall: StallData) => (
+          // <>lll</>
           <div
             key={stall.id}
-            id={`w-node-${stall.id}`}
-            className="site_right-item"
+            // id={`w-node-${stall.id}`}
+            className=" flex z-[100]"
           >
             <div className="card_content-block">
               <span className="price-text">{stall?.ticketName} </span>
@@ -261,9 +263,9 @@ const StallList = ({ data, payments = [] }: StallListProps) => {
                     </svg>
                   </div>
                   <div className="time-text">
-                    <span className="text-span-2">Dates Available</span>
+                    <span className="text-span-2">Stalls Available</span>
                     <br />
-                    {stall?.dates}
+                    {stall?.available}
                   </div>
                 </div>
                 <div className="time-flex-item2">
@@ -301,7 +303,7 @@ const StallList = ({ data, payments = [] }: StallListProps) => {
                   <div className="time-text">
                     <span className="text-span-2">Area</span>
                     <br />
-                    {stall?.area}
+                    {stall?.stallArea}
                   </div>
                 </div>
               </div>
@@ -310,7 +312,8 @@ const StallList = ({ data, payments = [] }: StallListProps) => {
                   <div className="dropdown-text">
                     <span className="text-span-2">Guests</span>
                     <br />
-                    {stall.quantity} guest{stall.quantity !== 1 ? "s" : ""}
+                    {stall.totalQuantity} guest
+                    {stall.totalQuantity !== 1 ? "s" : ""}
                   </div>
                 </div>
               )}

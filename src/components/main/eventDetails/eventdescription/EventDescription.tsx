@@ -13,6 +13,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 import { formatDateTime } from "../../../../utils/commonFunctions/dateFormater";
 import StallList from "../stallList/StallList";
+import TicketModal from "../../../shared/ticketModal/TicketModal";
 
 const EventDescription = ({
   data,
@@ -213,10 +214,11 @@ const EventDescription = ({
                       </div>
                     </div>
 
-                    <StallList
+                    {/* <StallList
                       data={data?.tickets}
                       payments={data?.payment_status}
-                    />
+                    /> */}
+                    <TicketModal data={data} />
                   </div>
 
                   <div className="site_content-divider" />

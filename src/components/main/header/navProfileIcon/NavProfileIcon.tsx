@@ -63,9 +63,15 @@ const NavProfileIcon: React.FC = () => {
             label="Profile"
             onClick={() => navigate("/profile")}
           />
-          <ProfileMenuItem label="My Bookings" />
-          <ProfileMenuItem label="My Wishlist" />
-          <ProfileMenuItem label="Float a Table" />
+          <ProfileMenuItem
+            onClick={() => navigate("/bookings")}
+            label="My Bookings"
+          />
+          <ProfileMenuItem
+            label="My Wishlist"
+            onClick={() => navigate("/wishlist")}
+          />
+
           <div className="border-t border-gray-100 my-1"></div>
           <ProfileMenuItem label="Help" />
           <ProfileMenuItem label="Logout" />

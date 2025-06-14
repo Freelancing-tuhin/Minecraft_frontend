@@ -104,7 +104,7 @@ const ConcertCard = ({ setIsVisible, slide }: any) => {
 
   return (
     <Link
-      to={`/event/${slide._id}`}
+      to={`/space/${slide._id}`}
       id="w-node-fcce1b21-3954-7070-54ad-f0ea51f92fae-3890e283"
       className="table-list-card"
     >

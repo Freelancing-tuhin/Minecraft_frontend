@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import NavProfileIcon from "../../main/header/navProfileIcon/NavProfileIcon";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ isStickyTrue }: any) => {
   const [isSticky, setIsSticky] = useState(isStickyTrue || false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (isStickyTrue) {
       return;
@@ -99,6 +100,7 @@ const Navbar = ({ isStickyTrue }: any) => {
             <div className="flex items-center justify-end ml-auto space-x-2 sm:space-x-5">
               <button
                 type="button"
+                onClick={() => navigate("/wishlist")}
                 className="p-2 -m-2 text-gray-500 transition-all duration-200 hover:text-gray-900"
               >
                 <svg

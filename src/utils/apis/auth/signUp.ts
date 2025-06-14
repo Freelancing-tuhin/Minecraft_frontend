@@ -31,3 +31,27 @@ export const signupUser = async (payload: Payload) => {
     throw error;
   }
 };
+export const LoginUser = async (payload: Payload) => {
+  try {
+    const endpoint = `${initialRoute}/user-login`;
+    const response = await post(endpoint, payload, {
+      ...headers,
+      //   "Content-Type": "multipart/form-data",
+    });
+    if (response) {
+      const {
+        data: { message },
+      } = response;
+      if (message === MESSAGE.post.succ) {
+        const {
+          data: { result },
+        } = response;
+        return result;
+      }
+    }
+    throw new Error();
+  } catch (error: unknown) {
+    console.log(error);
+    throw error;
+  }
+};
