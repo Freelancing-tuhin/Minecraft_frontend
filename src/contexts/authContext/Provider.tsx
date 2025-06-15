@@ -46,6 +46,7 @@ const AuthContextProvider = ({ children }: ContextProviderProps) => {
             gender: user.gender,
             address: user.address,
             createdAt: user.createdAt,
+            profile_pic: user.profile_pic,
           }
         : null;
 

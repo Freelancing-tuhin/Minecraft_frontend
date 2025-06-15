@@ -1,8 +1,47 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { api } from "../../../utils";
+import AuthContext from "../../../contexts/authContext/authContext";
 
 const GoggleLogin = () => {
+  const { user, setUser } = useContext(AuthContext);
+  const location = useLocation(); // 👈 get current location
+  const navigate = useNavigate();
+  useEffect(() => {
+    console.log("Current Route:", location.pathname); // ✅ log the route
+  }, [location]);
+
+  // const [formData, setFormData] = useState({
+  //   full_name: "",
+  //   email: "",
+  //   password: "",
+  //   profile_pic: "",
+  // });
+
+  const handleSignUp = async (formData: any) => {
+    try {
+      const response = await api.auth.signupUser(formData);
+      setUser(response);
+
+      navigate("/");
+    } catch (error) {
+      console.error("Signup failed:", error);
+    }
+  };
+
+  const handleLogin = async (formData: any) => {
+    try {
+      const response = await api.auth.LoginUser(formData);
+      setUser(response);
+      console.log("=====>login user data", response);
+      navigate("/");
+    } catch (error) {
+      console.error("Signup failed:", error);
+    }
+  };
+
   const login = useGoogleLogin({
     onSuccess: async (response) => {
       try {
@@ -16,15 +55,24 @@ const GoggleLogin = () => {
         );
         console.log(res.data.email);
         const signUpPayload = {
-          first_name: res.data.given_name,
-          middle_name: "",
-          last_name: res.data.family_name,
+          full_name: `${res.data.given_name} ${res.data.family_name}`,
           email: res.data.email,
           role: "CUSTOMER", // Default role
           password: res.data.sub,
+          profile_pic: res.data.picture || "",
         };
+        // setFormData({
+        //   full_name: `${res.data.given_name} ${res.data.family_name}`,
+        //   email: res.data.email,
+        //   password: res.data.sub,
+        //   profile_pic: res.data.picture || "",
+        // });
 
-        // CustomerLogin(signUpPayload);
+        if (location.pathname === "/signup") {
+          handleSignUp(signUpPayload);
+        } else {
+          handleLogin(signUpPayload);
+        }
         console.log("========>user data", signUpPayload);
       } catch (err) {
         console.log(err);

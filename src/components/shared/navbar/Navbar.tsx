@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import NavProfileIcon from "../../main/header/navProfileIcon/NavProfileIcon";
 import { useNavigate } from "react-router-dom";
+import { Logout } from "../../../utils/commonFunctions/logout";
 
 const Navbar = ({ isStickyTrue }: any) => {
   const [isSticky, setIsSticky] = useState(isStickyTrue || false);
+
   const navigate = useNavigate();
+
   useEffect(() => {
     if (isStickyTrue) {
       return;
