@@ -15,6 +15,7 @@ import { formatDateTime } from "../../../../utils/commonFunctions/dateFormater";
 import StallList from "../stallList/StallList";
 import TicketModal from "../../../shared/ticketModal/TicketModal";
 import TicketModalMobile from "../../../shared/ticketModal/TicketModalMobile";
+import ReportModal from "../../../shared/reportModal/ReportModal";
 
 const EventDescription = ({
   data,
@@ -357,9 +358,7 @@ const EventDescription = ({
                       </div>
                       <div className="report-div magrin-top-1rem">
                         {/* <ReportTable tableId={data?.id} /> */}
-                        <a href="#" className="report-btn w-button">
-                          Report User
-                        </a>
+                        <ReportModal />
                       </div>
                     </div>
                   </div>

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { api } from "../../../../utils";
+import AuthContext from "../../../../contexts/authContext/authContext";
 
 interface StallData {
   id: string;
@@ -37,6 +38,8 @@ interface StallListProps {
 const RAZORPAY_KEY_ID = "rzp_test_WOvg0OAJCnGejI";
 
 const StallList = ({ data, payments = [] }: StallListProps) => {
+  const { user } = useContext(AuthContext);
+
   const handlePaymentRazorPay = async (order_id: string, bookingId: string) => {
     console.log("=====>bookingId", bookingId);
     const options = {
@@ -77,13 +80,14 @@ const StallList = ({ data, payments = [] }: StallListProps) => {
   };
 
   const handleBook = async (stall: StallData) => {
+    console.log("====>selected stall", stall);
     try {
       const payload = {
-        userId: "67e2b75a886e962459042cc9",
+        userId: user?.id,
         eventId: "6808ba3e9f70d1521e87b33d",
         ticketId: stall?._id,
         ticketsCount: 1,
-        receipt: "REC123359",
+        receipt: "REC1233d59",
       };
 
       const response = await api.booking.createBooking(payload);
@@ -106,7 +110,7 @@ const StallList = ({ data, payments = [] }: StallListProps) => {
       // No payment exists for this stall - show Book Now
       return (
         <div
-          onClick={() => stall?.available.length > 0 && handleBook(stall)}
+          onClick={() => stall?.available > 0 && handleBook(stall)}
           style={{
             backgroundColor: "black",
             color: "white",
@@ -121,7 +125,7 @@ const StallList = ({ data, payments = [] }: StallListProps) => {
             textAlign: "center",
           }}
         >
-          {stall?.available.length > 0 ? <> Book Now</> : <>Sold Out</>}
+          {stall?.available > 0 ? <> Book Now</> : <>Sold Out</>}
         </div>
       );
     } else if (

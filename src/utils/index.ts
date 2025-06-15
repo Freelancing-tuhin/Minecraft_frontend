@@ -12,6 +12,7 @@ import {
   editProvider,
   getAllProviders,
 } from "./apis/providers/providers";
+import { giveReview } from "./apis/ratings/ratings";
 import {
   createService,
   deleteService,
@@ -45,5 +46,8 @@ export const api = {
     createBooking,
     updateBooking,
     getBookings,
+  },
+  review: {
+    giveReview,
   },
 };

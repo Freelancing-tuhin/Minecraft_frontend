@@ -1,7 +1,8 @@
 import React from "react";
 import { Calendar, Ticket, BadgeCheck, Hash } from "lucide-react";
 import { formatDateTime } from "../../../utils/commonFunctions/dateFormater";
-import { IconPrinter } from "@tabler/icons-react";
+import { IconPrinter, IconStar, IconX } from "@tabler/icons-react";
+import RatingsModal from "../ratingModal/RatingsModal";
 
 const BookingCard = ({ event, data }: any) => {
   const isPaid = data?.paymentStatus === "Completed";
@@ -35,6 +36,13 @@ const BookingCard = ({ event, data }: any) => {
           </div>
           <div className="text-xs text-gray-500">
             Tickets: {data?.totalTickets || 0}
+          </div>
+          <div className="flex gap-2">
+            <div className="flex items-center gap-1  text-center  px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium cursor-pointer hover:bg-red-200 transition">
+              <IconX className="w-4 h-4" />
+              Cancel Booking
+            </div>
+            <RatingsModal eventId={event} />
           </div>
         </div>
       </div>
