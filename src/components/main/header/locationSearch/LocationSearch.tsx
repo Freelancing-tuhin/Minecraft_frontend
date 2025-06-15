@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import LocationCards from "./locationCards/LocationCards";
 
 const LocationSearch = ({ place, handlePlaceInputChange }: any) => {
-  const [showDrawer, setShowDrawer] = useState(false); // Drawer visibility
-  const [filteredLocations, setFilteredLocations] = useState<any>([]); // Filtered locations
-  const dropdownRef = useRef<any>(null); // Ref for the dropdown container
+  const [showDrawer, setShowDrawer] = useState(false);
+  const [filteredLocations, setFilteredLocations] = useState<any>([]);
+  const dropdownRef = useRef<any>(null);
 
-  // Close the drawer when clicking outside
+  // Close drawer when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -21,57 +21,38 @@ const LocationSearch = ({ place, handlePlaceInputChange }: any) => {
   }, []);
 
   const fetchCitySuggestions = async (query: any) => {
-    // eslint-disable-next-line no-undef
-    // @ts-ignore eslint-disable-next-line
+    // @ts-ignore
     const service = new google.maps.places.AutocompleteService();
 
     service.getPlacePredictions(
       {
         input: query,
-        types: ["geocode"], // Use geocode for broader results, including localities
-        componentRestrictions: { country: "in" }, // Restrict to India
+        types: ["geocode"], // Can also use ["(cities)"] for only cities
+        componentRestrictions: { country: "in" }, // India
       },
       (predictions: any, status: any) => {
-        // eslint-disable-next-line no-undef
-        // @ts-ignore eslint-disable-next-line
+        // @ts-ignore
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-          // Filter predictions where "Bengaluru" exists in the "terms" array
-          const bangaloreLocations = predictions.filter((prediction: any) =>
-            prediction.terms.some(
-              (term: any) => term.value.toLowerCase() === "bengaluru"
-            )
+          const suggestions = predictions.map(
+            (prediction: any) => prediction.description
           );
-
-          if (bangaloreLocations.length > 0) {
-            const suggestions = bangaloreLocations.map(
-              (prediction: any) => prediction.description
-            );
-            setFilteredLocations(suggestions);
-          } else {
-            // If no Bengaluru results, show custom message
-            setFilteredLocations([
-              "Bangalore is our first love. But don’t worry, we’re ready to start a long-distance relationship soon! ❤️",
-            ]);
-          }
+          setFilteredLocations(suggestions);
         } else {
-          // Handle no results or API errors
-          setFilteredLocations([
-            "Bangalore is our first love. But don’t worry, we’re ready to start a long-distance relationship soon! ❤️",
-          ]);
+          setFilteredLocations(["No locations found. Try a different name 🚀"]);
         }
       }
     );
   };
 
   const handleInputChange = (e: any) => {
-    handlePlaceInputChange(e); // Call the parent handler
+    handlePlaceInputChange(e); // Send to parent
     const value = e.target.value;
     if (value.trim()) {
-      fetchCitySuggestions(value); // Fetch city suggestions
+      fetchCitySuggestions(value);
     } else {
-      setFilteredLocations([]); // Clear suggestions for empty input
+      setFilteredLocations([]);
     }
-    setShowDrawer(true); // Ensure drawer stays open while typing
+    setShowDrawer(true);
   };
 
   return (
@@ -79,7 +60,7 @@ const LocationSearch = ({ place, handlePlaceInputChange }: any) => {
       {/* Input Field */}
       <div
         className="navbar_form--destination dropdown-trigger"
-        onClick={() => setShowDrawer(!showDrawer)} // Toggle drawer
+        onClick={() => setShowDrawer(!showDrawer)}
       >
         <label htmlFor="name-2" className="title">
           Where
@@ -89,7 +70,7 @@ const LocationSearch = ({ place, handlePlaceInputChange }: any) => {
           type="text"
           name="name-2"
           value={place}
-          onChange={(e) => handleInputChange(e)}
+          onChange={handleInputChange}
           placeholder="Search Location"
           className="navbar_form--textfield w-input"
           autoComplete="off"
@@ -100,30 +81,24 @@ const LocationSearch = ({ place, handlePlaceInputChange }: any) => {
 
       {/* Drawer */}
       {showDrawer && (
-        <div className="absolute top-full left-0 right-0 pb-5 w-56 sm:w-96 bg-white rounded-2xl shadow-lg mt-2">
+        <div className="absolute top-full left-0 right-0 pb-5 w-56 sm:w-96 bg-white rounded-2xl shadow-lg mt-2 z-50">
           <ul className="max-h-72 overflow-auto pt-5 padleft-0">
             {filteredLocations.length > 0 ? (
-              filteredLocations.map((location: any, index: any) => (
+              filteredLocations.map((location: any, index: number) => (
                 <li
                   key={index}
                   onClick={() => {
-                    if (!location.includes("Bangalore is our first love")) {
-                      handlePlaceInputChange({ target: { value: location } }); // Select location
-                      setShowDrawer(false); // Close drawer
-                    }
+                    handlePlaceInputChange({ target: { value: location } });
+                    setShowDrawer(false);
                   }}
                 >
-                  <LocationCards
-                    location={location}
-                    showIcon={!location.includes("Bangalore is our first love")}
-                  />
+                  <LocationCards location={location} showIcon={true} />
                 </li>
               ))
             ) : (
               <li className="px-4 py-2 text-gray-500">No locations found</li>
             )}
           </ul>
-          {/* <LocationSvg /> */}
         </div>
       )}
     </div>

@@ -10,6 +10,7 @@ import Profile from "./screens/profile/Profile";
 import Wishlist from "./screens/wishlist/Wishlist";
 import Bookings from "./screens/bookings/Bookings";
 import Login from "./screens/auth/login/Login";
+import AboutUs from "./screens/aboutUs/AboutUs";
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SIgnUp />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/contactus" element={<AboutUs />} />
 
         {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>

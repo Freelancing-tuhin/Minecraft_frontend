@@ -14,6 +14,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { formatDateTime } from "../../../../utils/commonFunctions/dateFormater";
 import StallList from "../stallList/StallList";
 import TicketModal from "../../../shared/ticketModal/TicketModal";
+import TicketModalMobile from "../../../shared/ticketModal/TicketModalMobile";
 
 const EventDescription = ({
   data,
@@ -22,12 +23,37 @@ const EventDescription = ({
   open,
 }: any) => {
   const tagsArray = data?.tags?.split(",").map((tag: any) => tag.trim());
-
+  const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(true);
   const [read, setRead] = useState(false);
+  const [isModalOpen, setIsModalOpen1] = useState(false);
+  const toggleModal = () => {
+    setIsModalOpen1(!isModalOpen);
+    console.log("======>data", data);
+  };
 
   return (
     <>
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black/50 bg-opacity-75 flex items-center justify-center p-4 z-50">
+          <div className=" w-full px-5 h-[87vh]  overflow-y-scroll bg-white rounded-lg shadow-xl overflow-hidden">
+            <div className="px-6 py-4 bg-gray-50 flex justify-end relative position-relative">
+              <button
+                onClick={toggleModal}
+                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+              >
+                Close
+              </button>
+            </div>
+            {/* Modal content */}
+            <StallList
+              data={data?.ticket_availability}
+              payments={data?.payment_status}
+            />
+            {/* Close button */}
+          </div>
+        </div>
+      )}
       <section className="lisiting-site-content">
         <section
           data-w-id="baa49f18-5350-fcd4-0685-c53c0b86a6fd"
@@ -35,18 +61,28 @@ const EventDescription = ({
             isVisible ? "translate-y-0" : "translate-y-full"
           }`}
         >
-          <div className="mobile-book-btn">
-            <div className="mob-book-btn-sticky">
-              <div className="card-flex-block">
-                <div className="night-price-text mob-text">
-                  <span className="price-text mob-text-price">
-                    {/* ₹ {data?.price}{" "} */}
-                  </span>
-                  / per seat
-                </div>
+          {!isModalOpen && (
+            <div className="mobile-book-btn">
+              <div
+                onClick={toggleModal}
+                style={{
+                  backgroundColor: "#2196f3",
+                  color: "white",
+                  padding: "10px 20px",
+                  border: "none",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  width: "100%",
+                  marginTop: "15px",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  textAlign: "center",
+                }}
+              >
+                Show Tickets
               </div>
             </div>
-          </div>
+          )}
         </section>
         <div className="section-home-site_content">
           <div className="page-padding-2">

@@ -72,7 +72,7 @@ const Navbar = ({ isStickyTrue }: any) => {
             {!isSticky && (
               <div className="hidden  lg:flex lg:items-center lg:ml-16 xl:ml-24 lg:space-x-8">
                 <a
-                  href="#"
+                  href="/about"
                   className="text-sm font-medium text-gray-900 transition-all duration-200 rounded hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
                 >
                   About

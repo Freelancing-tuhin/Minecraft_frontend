@@ -210,16 +210,16 @@ const StallList = ({ data, payments = [] }: StallListProps) => {
   };
 
   return (
-    <div className="flex sm:flex gap-4 m-2 md:m-8">
+    <div className="sm:flex gap-4 m-2 md:m-8">
       {data &&
         data.map((stall: StallData) => (
           // <>lll</>
           <div
             key={stall.id}
             // id={`w-node-${stall.id}`}
-            className=" flex z-[100]"
+            className=" flex z-[100] mb-5"
           >
-            <div className="card_content-block">
+            <div className="card_contenst-block border-2 border-gray-200 rounded-lg p-4 w-full">
               <span className="price-text">{stall?.ticketName} </span>
               <div className="card-flex-block">
                 <div className="night-price-text">
