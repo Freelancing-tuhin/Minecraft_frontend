@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <AuthContextProvider>
     <BookmarkProvider>
-      <GoogleOAuthProvider clientId="854940596531-pe3tvrsec94arejuc24fbl0ie44dn0kk.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId="82668349115-80umfmjah27uvghk51qs5ra15nc81b2u.apps.googleusercontent.com">
         <App />
       </GoogleOAuthProvider>
     </BookmarkProvider>
