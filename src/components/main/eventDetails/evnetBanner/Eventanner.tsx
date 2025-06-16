@@ -201,7 +201,11 @@ const EventBanner = ({ data, isShareModalOpen, setIsShareModalOpen }: any) => {
                     </div>
                   </div>
                   <p className="host-name">
-                    {data?.city ? <>{data?.city}</> : <>Bangalore</>}
+                    {data?.location?.address ? (
+                      <>{data?.location?.address}</>
+                    ) : (
+                      <>Bangalore</>
+                    )}
                   </p>
                 </div>
               </div>
@@ -248,9 +252,11 @@ const EventBanner = ({ data, isShareModalOpen, setIsShareModalOpen }: any) => {
                             <IconMapPin size={20} color="gray" />
                           </div>
                           <p className="location-name-on-listing">
-                            {data?.city ? <>{data?.city}</> : <>Bangalore</>},{" "}
-                            {data?.state ? <>{data?.state}</> : <>Karnataka</>},
-                            India
+                            {data?.location?.address ? (
+                              <>{data?.location?.address}</>
+                            ) : (
+                              <>Bangalore,India</>
+                            )}
                           </p>
                         </div>
                       </div>

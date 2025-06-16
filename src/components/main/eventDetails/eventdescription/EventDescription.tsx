@@ -9,7 +9,12 @@
 import React, { useEffect, useState } from "react";
 import "../../../../App.css";
 
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 
 import { formatDateTime } from "../../../../utils/commonFunctions/dateFormater";
 import StallList from "../stallList/StallList";
@@ -23,6 +28,7 @@ const EventDescription = ({
   setLoginModal,
   open,
 }: any) => {
+  const { id } = useParams<{ id: string }>();
   const tagsArray = data?.tags?.split(",").map((tag: any) => tag.trim());
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(true);
@@ -257,7 +263,27 @@ const EventDescription = ({
                     /> */}
                     <TicketModal data={data} />
                   </div>
+                  <div className="site_content-divider" />
+                  <div className="site_sleep-content">
+                    <div className="margin-bottom margin-small">
+                      <h2 className="heading-7">Foot Print</h2>
+                    </div>
+                    <div className="text-weight-bold">
+                      {data?.floor_print_image ? (
+                        <>
+                          <img
+                            className="h-56 w-80  object-cover rounded"
+                            src={data?.floor_print_image}
+                            alt=""
+                          />
+                        </>
+                      ) : (
+                        <>Major FOMO, but the data isn’t here. 🫠</>
+                      )}
 
+                      <br />
+                    </div>
+                  </div>
                   <div className="site_content-divider" />
                   <div
                     data-w-id="055cdd77-ca91-c72e-3006-56f5f4b8a3ec"
@@ -291,6 +317,7 @@ const EventDescription = ({
                         </div>
                       </div>
                     </div>
+
                     <div className="map_content-wrap">
                       <div className="margin-top margin-medium">
                         {/* <h6 className="heading-6">{data?.address}</h6> */}

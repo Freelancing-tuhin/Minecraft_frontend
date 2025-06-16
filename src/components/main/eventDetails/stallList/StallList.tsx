@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { api } from "../../../../utils";
 import AuthContext from "../../../../contexts/authContext/authContext";
+import { useParams } from "react-router-dom";
 
 interface StallData {
   id: string;
@@ -38,6 +39,7 @@ interface StallListProps {
 const RAZORPAY_KEY_ID = "rzp_test_WOvg0OAJCnGejI";
 
 const StallList = ({ data, payments = [] }: StallListProps) => {
+  const { id } = useParams<{ id: string }>();
   const { user } = useContext(AuthContext);
 
   const handlePaymentRazorPay = async (order_id: string, bookingId: string) => {
@@ -84,7 +86,7 @@ const StallList = ({ data, payments = [] }: StallListProps) => {
     try {
       const payload = {
         userId: user?.id,
-        eventId: "6808ba3e9f70d1521e87b33d",
+        eventId: id,
         ticketId: stall?._id,
         ticketsCount: 1,
         receipt: "REC1233d59",

@@ -33,33 +33,8 @@ const ConcertCard = ({ setIsVisible, slide }: any) => {
   }, []);
 
   const getTruncatedCity = () => {
-    if (!slide?.city) return "Bangalore"; // Default value
-
-    if (screenWidth < 480) {
-      return slide.city;
-    } else if (screenWidth >= 480 && screenWidth < 630) {
-      return slide.city.length > 10
-        ? `${slide.city.substring(0, 10)}...`
-        : slide.city;
-    } else if (screenWidth >= 630 && screenWidth < 750) {
-      return slide.city.length > 12
-        ? `${slide.city.substring(0, 12)}...`
-        : slide.city;
-    } else if (screenWidth >= 750 && screenWidth < 990) {
-      return slide.city.length > 10
-        ? `${slide.city.substring(0, 10)}...`
-        : slide.city;
-    } else if (screenWidth >= 991 && screenWidth < 1500) {
-      return slide.city.length > 8
-        ? `${slide.city.substring(0, 8)}...`
-        : slide.city;
-    } else if (screenWidth >= 1501 && screenWidth < 2500) {
-      return slide.city.length > 13
-        ? `${slide.city.substring(0, 13)}...`
-        : slide.city;
-    } else {
-      return slide.city;
-    }
+    if (!slide?.location?.address) return "Bangalore"; // Default value
+    return slide?.location?.address;
   };
 
   const getDynamicClass = () => {
@@ -208,13 +183,13 @@ const ConcertCard = ({ setIsVisible, slide }: any) => {
             className="px-1 font-sans
         text-base flex gap-1 items-center justify-between"
           >
-            {slide?.ratings}
+            {slide?.ratings ? slide?.ratings : 0}
             <IconStarFilled size={18} color="#fdd663" />
           </div>
         </div>
 
-        <div className="card-meta-datat">
-          <div
+        <div className="card-meta-datat -ml-2">
+          {/* <div
             id="w-node-fcce1b21-3954-7070-54ad-f0ea51f92fbf-3890e283"
             className="location-div"
           >
@@ -226,8 +201,8 @@ const ConcertCard = ({ setIsVisible, slide }: any) => {
                 {formatDate(slide?.startDate)} - {formatDate(slide?.endDate)}
               </span>
             </div>
-          </div>
-          <div className="date-on-card">
+          </div> */}
+          <div className="date-on-card -ml-2">
             <div className="code-embed-4 date-icon-on-card w-embed">
               <IconMapPin size={20} color="gray" />
             </div>
