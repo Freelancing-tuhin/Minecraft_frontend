@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import NavProfileIcon from "../../main/header/navProfileIcon/NavProfileIcon";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Logout } from "../../../utils/commonFunctions/logout";
 
 const Navbar = ({ isStickyTrue }: any) => {
@@ -35,37 +35,16 @@ const Navbar = ({ isStickyTrue }: any) => {
               isSticky ? "h-16 lg:h-[7rem] py" : "h-16 lg:h-[72px]"
             } transition-all duration-500 ease-in-out`}
           >
-            {/* Mobile Menu Button */}
-            <button
-              type="button"
-              className="p-2 -m-2 text-gray-900 transition-all duration-200 lg:hidden hover:text-gray-700"
-            >
-              <svg
-                className="w-6 h-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
-
             {/* Logo */}
             <div className="flex items-center flex-shrink-0 ml-4 lg:ml-0">
-              <a href="#" title="" className="inline-flex">
+              <Link to="/" title="" className="inline-flex">
                 <span className="sr-only">Rareblocks logo</span>
                 <img
                   className="w-auto h-8"
                   src="https://cdn.rareblocks.xyz/collection/clarity-ecommerce/images/logo.svg"
                   alt=""
                 />
-              </a>
+              </Link>
             </div>
 
             {/* Navigation Links (only show when not sticky) */}

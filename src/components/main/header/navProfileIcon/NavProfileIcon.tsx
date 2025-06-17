@@ -8,7 +8,7 @@ const NavProfileIcon: React.FC = () => {
   const { user } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  console.log("=======>user ", user);
+  // console.log("=======>user ", user);
   const handleLogout = () => {
     Logout();
     navigate("/");

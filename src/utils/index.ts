@@ -6,7 +6,11 @@ import {
   getBookings,
   updateBooking,
 } from "./apis/booking/booking";
-import { getAllEvents, getEventDetails } from "./apis/events/events.api";
+import {
+  getAllEvents,
+  getEventDetails,
+  searchEvent,
+} from "./apis/events/events.api";
 import {
   createProvider,
   deleteProvider,
@@ -43,6 +47,7 @@ export const api = {
   events: {
     getAllEvents,
     getEventDetails,
+    searchEvent,
   },
   booking: {
     createBooking,

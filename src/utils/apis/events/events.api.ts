@@ -61,3 +61,31 @@ export const getEventDetails = async (filter: any) => {
     throw error;
   }
 };
+
+export const searchEvent = async (filter: any) => {
+  try {
+    const endpoint = `${initialRoute}/search-event-for-users`;
+    const response = await get(
+      endpoint,
+      {
+        ...headers,
+      },
+      filter
+    );
+    if (response) {
+      const {
+        data: { message },
+      } = response;
+      if (message === MESSAGE.get.succ) {
+        const {
+          data: { result },
+        } = response;
+        return result;
+      }
+    }
+    throw new Error();
+  } catch (error: any) {
+    console.log(error);
+    throw error;
+  }
+};

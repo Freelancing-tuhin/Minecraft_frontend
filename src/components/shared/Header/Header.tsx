@@ -10,10 +10,11 @@ import { toast } from "react-toastify";
 import LocationSearch from "../../main/header/locationSearch/LocationSearch";
 import NavbarDateInput from "../../main/header/navbarDateInput/NavbarDateInput";
 import NavProfileIcon from "../../main/header/navProfileIcon/NavProfileIcon";
+import { api } from "../../../utils";
 
 function Header({ setIsVisible }: any) {
   const accessToken = localStorage.getItem("@user");
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     const trigger = document.querySelector(".dropdown-trigger");
     const dropdown = document.querySelector(".dropdown");
@@ -76,8 +77,6 @@ function Header({ setIsVisible }: any) {
     }
     event.preventDefault();
 
-    const apiUrl = `https://htprdapi.hightable.ai/tables/table-search`;
-
     const requestBody = {
       address: place,
       from: formatDate(startDate),
@@ -86,27 +85,16 @@ function Header({ setIsVisible }: any) {
     };
 
     try {
-      //   const response = await axios.post(apiUrl, requestBody, {
-      //     params: {
-      //       access_token: accessToken,
-      //       address: "puducherry",
-      //     },
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   });
-
-      console.log("API Response is:", requestBody);
-      //   navigate("/searchresult", {
-      //     state: {
-      //       data: response.data,
-      //       searchPayload: requestBody,
-      //     },
-      //   });
+      navigate("/searchresult", {
+        state: {
+          data: searchText,
+          searchPayload: requestBody,
+        },
+      });
     } catch (error: any) {
-      //   navigate("/searchresult", {
-      //     state: { error: error.message, details: error.response?.data || null },
-      //   });
+      navigate("/searchresult", {
+        state: { error: error.message, details: error.response?.data || null },
+      });
     }
   };
 
