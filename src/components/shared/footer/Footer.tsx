@@ -45,16 +45,18 @@ const Footer = ({ homePage }: any) => {
               </a>
 
               <p className="body-text mb-3 mt-5">
-                HighTable is a unique social experience where you get to dine
-                with 4-10 people and engage in meaningful conversations. It’s
-                designed for individuals aged 30-45 who enjoy meeting new people
-                in a relaxed yet structured environment.
+                Sure! Here's a similar-length write-up for your space booking
+                platform **MinCraft**: --- **MinCraft** is your go-to platform
+                for discovering and booking unique spaces for events, work, or
+                leisure.
               </p>
               <p className="body-text">
-                Our tables create the perfect setting to expand your social
-                circle, have engaging discussions, and build real connections.
-                If you love good conversations with like-minded people,
-                HighTable is for you!
+                Whether you're planning a cozy workshop, a team meetup, or a
+                creative session, MinCraft helps you find the perfect setting,
+                hassle-free. Tailored for modern professionals, creators, and
+                small groups, MinCraft offers flexible, affordable venues with a
+                smooth booking experience. If you value convenience, style, and
+                purpose-driven spaces, **MinCraft is made for you.**
               </p>
               <div className="footer-nav margin-top-desktop-40">
                 <Link
@@ -96,29 +98,14 @@ const Footer = ({ homePage }: any) => {
                 Follow us for fun updates, behind-the-scenes vibes, and a dash
                 of sass. Let’s make scrolling worth it!
               </p>
-              <a
-                href="https://www.instagram.com/hightable.irl/"
-                className="footer-link mgtop10"
-              >
-                Instagram
-              </a>
-              <a
-                href="https://www.linkedin.com/company/high-table-irl/"
-                className="footer-link mgtop10"
-              >
-                Linkedin
-              </a>
-              <a
-                href="https://www.facebook.com/people/HighTable/61570316743206/"
-                className="footer-link mgtop10"
-              >
-                Facebook
-              </a>
+              <a className="footer-link mgtop10">Instagram</a>
+              <a className="footer-link mgtop10">Linkedin</a>
+              <a className="footer-link mgtop10">Facebook</a>
             </div>
           </div>
           <div className="footer-bottom">
             <p className="body-text">
-              © 2024 Hightable Network Private Limited | Designed by{" "}
+              © xyz Limited | Designed by{" "}
               <a href="https://kwad.in" className="link">
                 Kwad
               </a>

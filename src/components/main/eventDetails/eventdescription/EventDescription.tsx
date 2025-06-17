@@ -380,7 +380,7 @@ const EventDescription = ({
                           <br />
                           money or communicate outside of the
                           <br />
-                          HighTable website or app.
+                          Minecraft website or app.
                         </div>
                       </div>
                       <div className="report-div magrin-top-1rem">

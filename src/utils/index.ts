@@ -1,3 +1,4 @@
+import { editUserDetails } from "./apis/auth/edit";
 import { AdminLogin } from "./apis/auth/login";
 import { LoginUser, signupUser } from "./apis/auth/signUp";
 import {
@@ -25,6 +26,7 @@ export const api = {
     AdminLogin,
     signupUser,
     LoginUser,
+    editUserDetails,
   },
   providers: {
     getAllProviders,

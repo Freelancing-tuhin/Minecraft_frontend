@@ -14,9 +14,17 @@ const LeftCard = ({ editProfileClicked, setEditProfileCliked }: any) => {
         <div className="review_details-left-item">
           <div className="review_details-flex-item">
             <div className="review-five-user">
-              <div className="nav-icon">
-                <div className="user" />
-              </div>
+              {user?.profile_pic ? (
+                <img
+                  src={user.profile_pic}
+                  alt="Profile"
+                  className="w-10 h-10 rounded-full object-cover border-1 shadow-xl border-gray-200 hover:border-gray-300 transition-colors duration-200"
+                />
+              ) : (
+                <div className="nav-icon">
+                  <div className="user" />
+                </div>
+              )}
             </div>
             <div className="review_details-content">
               <div className="margin-bottom margin-xxsmall">
@@ -48,17 +56,17 @@ const LeftCard = ({ editProfileClicked, setEditProfileCliked }: any) => {
           </div>
           <div className="margin-top margin-medium w-72 dfkex">
             <p className="paragraph-2">
-              No description? No problem, just vibes.
+              {user?.about || "No description? No problem, just vibes."}
             </p>
           </div>
 
           <div className="margin-bottom margin-small view-profile-btn pt-[30px]">
             <a
-              onClick={() => setEditProfileCliked(true)}
+              // onClick={() => setEditProfileCliked(true)}
               href="#"
               className="button-3 w-button"
             >
-              Edit Profile
+              Share Profile
             </a>
           </div>
         </div>
