@@ -1,6 +1,6 @@
 export const url =
   //  "http://localhost:8989";
-  "https://minecraft-server-unyk.onrender.com";
+  "https://minecraft.tuhinthakur.me";
 
 export const port = "8989";
 export const version = "v1";
